@@ -1,0 +1,22 @@
+alias
+ - init_kube
+ - init_dock
+access cluster
+ - kubectl get po -A
+ - minikube kubectl -- get po -A
+ - minikube dashboard --
+
+installment
+ - kubeadm
+
+ - metallB
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/namespace.yaml
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.5/manifests/metallb.yaml
+first install
+kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
+
+
+plan:
+1. kubernetes framework opzetten met officiele images
+2. iets met yaml files
+3. docker files maken
