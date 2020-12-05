@@ -6,7 +6,7 @@
 #    By: zenotan <zenotan@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/12/01 15:31:31 by zenotan       #+#    #+#                  #
-#    Updated: 2020/12/01 17:52:31 by zenotan       ########   odam.nl          #
+#    Updated: 2020/12/05 18:51:38 by ztan          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,13 +17,29 @@ FROM	alpine:latest
 #		install nginx
 RUN		apk update
 RUN		apk add nginx
+RUN		apk add openssh
+RUN		apk add openssl
 
-#		create new user and group
+
+#		create new user and group for nginx, group off www for web
 RUN		adduser -D -g 'www' www
 #		create dir for html files
-RUN		mkdir /www && \
-			chown -R www:www /var/lib/nginx && \
-			chown -R www:www /www
+RUN		mkdir /www \
+		&& chown -R www:www /var/lib/nginx \
+		&& chown -R www:www /www
 
-#		creating a config
-copy	nginx.conf /etc/nginx/
+#		create new user for openssh
+#		https://medium.com/@leicao.me/how-to-ssh-into-a-docker-container-remotely-as-root-or-a-non-root-user-b2105c797273
+RUN		addgroup sshgroup \
+		&& adduser -D ztan \
+		&& echo "ztan:lmao" | chpasswd
+RUN		ssh-keygen -A
+
+#		https://stackoverflow.com/questions/44047315/generate-a-self-signed-certificate-in-docker
+RUN		openssl req -x509 -nodes -days 365 -newkey rsa:2048 -subj '/C=NL/ST=Noord-Holland/O=Codam/CN=services' -keyout /etc/ssl/services.key -out /etc/ssl/services.crt
+
+COPY	nginx.conf /etc/nginx/
+COPY	sshd_config /etc/ssh/sshd_config
+# COPY	index.html /www
+
+EXPOSE	80 443 22
