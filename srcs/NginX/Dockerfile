@@ -6,7 +6,7 @@
 #    By: zenotan <zenotan@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/12/01 15:31:31 by zenotan       #+#    #+#                  #
-#    Updated: 2020/12/05 18:51:38 by ztan          ########   odam.nl          #
+#    Updated: 2020/12/07 18:06:02 by ztan          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ RUN		apk update
 RUN		apk add nginx
 RUN		apk add openssh
 RUN		apk add openssl
-
+# idk why you have to do this
+RUN		mkdir /var/run/nginx/
 
 #		create new user and group for nginx, group off www for web
 RUN		adduser -D -g 'www' www
@@ -40,6 +41,11 @@ RUN		openssl req -x509 -nodes -days 365 -newkey rsa:2048 -subj '/C=NL/ST=Noord-H
 
 COPY	nginx.conf /etc/nginx/
 COPY	sshd_config /etc/ssh/sshd_config
-# COPY	index.html /www
+COPY	setup.sh .
+COPY	index.html /www
+COPY	style.css /www
 
-EXPOSE	80 443 22
+EXPOSE	80 443 22000
+
+RUN		chmod 777 setup.sh
+CMD		./setup.sh

@@ -1,34 +1,3 @@
-# #create a storage in goinfre
-# rm -rf ~/.minikube
-# mkdir -p ~/goinfre/.minikube
-# ln -s ~/goinfre/.minikube ~/.minikube
-# #
-
-# minikube delete
-
-# minikube start \
-# --vm-driver=virtualbox \
-# # --addons metallb \
-# # --addons dashboard \
-# # --addons metrics-server \
-# --disk-size=5gb
-
-# kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/namespace.yaml
-# # kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/metallb.yaml
-
-# kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
-# kubectl create -f srcs/metallb.yaml
-
-# # docker pull nginx
-# # docker run docker.io/library/nginx:latest
-
-# kubectl create -f srcs/nginx.yaml
-# # kubectl describe deployment nginx
-
-# kubectl dashboard
-
-
-
 #!/bin/bash
 # creat link in goinfre to save memory
 # rm -rf ~/.minikube
@@ -53,9 +22,9 @@ kubectl apply -f srcs/metallb.yaml
 eval $(minikube docker-env)
 
 #nginx image
-docker build -t my_nginx ./srcs/nginx/
+docker build -t ft_nginx ./srcs/nginx/
 
 # deployment nginx
-kubectl apply -f srcs/NginX/nginx.yaml
+kubectl apply -f srcs/nginx/nginx.yaml
 
 minikube dashboard
