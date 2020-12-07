@@ -25,6 +25,6 @@ eval $(minikube docker-env)
 docker build -t ft_nginx ./srcs/nginx/
 
 # deployment nginx
-kubectl apply -f srcs/nginx/nginx.yaml
+kubectl apply -f srcs/nginx.yaml
 
 minikube dashboard
