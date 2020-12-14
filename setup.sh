@@ -16,7 +16,7 @@ minikube addons enable dashboard
 
 # On first install only create the matallb scret memberlist
 kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
-kubectl apply -f srcs/metallb.yaml
+kubectl apply -f srcs/yaml/metallb.yaml
 
 # set up minikube docker (env check if they are added)
 eval $(minikube docker-env)
@@ -25,6 +25,12 @@ eval $(minikube docker-env)
 docker build -t ft_nginx ./srcs/nginx/
 
 # deployment nginx
-kubectl apply -f srcs/nginx.yaml
+kubectl apply -f srcs/yaml/nginx.yaml
+
+docker build -t ft_wordpress ./srcs/wordpress/
+kubectl apply -f srcs/yaml/wordpress.yaml
+
+docker build -t ft_mysql ./srcs/mysql/
+kubectl apply -f srcs/yaml/mysql.yaml
 
 minikube dashboard

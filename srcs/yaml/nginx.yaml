@@ -5,7 +5,7 @@ metadata:
   labels:
     app: nginx
 spec:
-  replicas: 1
+  replicas: 1 # defaults to 1
   selector:
     matchLabels:
       app: nginx
@@ -27,12 +27,14 @@ spec:
           name: ssh
 ---
 apiVersion: v1
-kind: Service
+kind: Service # set of pods working together
 metadata:
   annotations:
     metallb.universe.tf/allow-shared-ip: shared
   name: nginx
 spec:
+  selector:
+    app: nginx
   ports:
   - name: http
     port: 80
@@ -45,6 +47,4 @@ spec:
   - name: ssh
     port: 22
     targetPort: 22
-  selector:
-    app: nginx
   type: LoadBalancer

@@ -5,33 +5,25 @@
 #                                                      +:+                     #
 #    By: ztan <ztan@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
-#    Created: 2020/12/13 15:39:00 by ztan          #+#    #+#                  #
-#    Updated: 2020/12/14 18:50:32 by ztan          ########   odam.nl          #
+#    Created: 2020/12/14 13:47:26 by ztan          #+#    #+#                  #
+#    Updated: 2020/12/14 18:47:29 by ztan          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
+# https://wiki.alpinelinux.org/wiki/WordPress
 FROM	alpine:latest
 
-# Setting environment variables
-ENV		MYSQL_ROOT_PASSWORD=admin
-ENV		MYSQL_DATABASE=wordpress
-ENV		MYSQL_USER=admin
-ENV		MYSQL_PASSWORD=admin
+RUN		apk update
 
-# Installing packages MariaDB
-RUN		apk add --no-cache mysql mysql-client
-RUN		addgroup mysql mysql
+RUN		apk add --no-cache wget php7 php7-fpm php7-opcache php7-gd php7-mysqli php7-zlib php7-curl php7-mbstring php7-json php7-session
 
-# copy wordpress database
-RUN		mkdir -p /tmp
-COPY	srcs/wordpress.sql /tmp/wordpress.sql
-COPY	srcs/my.cnf /etc/mysql/my.cnf
-COPY	srcs/init_1.sh /tmp/init_1.sh
-COPY	srcs/init_2.sh /tmp/init_2.sh
-RUN		chmod +x /tmp/init_1.sh
-RUN		chmod +x /tmp/init_2.sh
+RUN		mkdir -p /usr/share/webapps/
+RUN		wget -c https://wordpress.org/latest.tar.gz
+RUN		tar -xzvf latest.tar.gz -C /usr/share/webapps/
+RUN		rm latest.tar.gz
 
-# default port for mysql
-EXPOSE	3306
+COPY	srcs/wp-config.php /usr/share/webapps/wordpress/wp-config.php
+COPY	srcs/start.sh .
+RUN		chmod +x ./start.sh
 
-CMD		sh /tmp/init_1.sh
+EXPOSE	5050
