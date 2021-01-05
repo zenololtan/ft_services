@@ -42,7 +42,11 @@ kubectl apply -f srcs/yaml/wordpress.yaml
 docker build -t ft_phpmyadmin ./srcs/phpmyadmin/
 kubectl apply -f srcs/yaml/phpmyadmin.yaml
 
-#ftps
+#fttps/telegraph
+
+#grafana
+
+#influxDB
 
 # ---------------------------MINIKUBE DASHBOARD---------------------
 minikube dashboard
