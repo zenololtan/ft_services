@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/zenololo/images/blob/master/codam_logo_small.png">
+  <img src="https://github.com/zenololtan/images/blob/master/codam_logo_small.png">
 </p>
 
 # Ft_services 
