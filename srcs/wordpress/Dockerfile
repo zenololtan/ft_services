@@ -6,7 +6,7 @@
 #    By: ztan <ztan@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/12/14 13:47:26 by ztan          #+#    #+#                  #
-#    Updated: 2020/12/14 18:47:29 by ztan          ########   odam.nl          #
+#    Updated: 2020/12/23 13:05:46 by zenotan       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,3 +27,5 @@ COPY	srcs/start.sh .
 RUN		chmod +x ./start.sh
 
 EXPOSE	5050
+
+CMD		sh ./start.sh

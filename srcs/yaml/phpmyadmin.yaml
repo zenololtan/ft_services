@@ -28,7 +28,7 @@ spec:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mysql-pass
+                  name: php-secret
                   key: password
 ---
 apiVersion: v1

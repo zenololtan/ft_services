@@ -6,7 +6,7 @@
 #    By: ztan <ztan@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/12/13 15:39:00 by ztan          #+#    #+#                  #
-#    Updated: 2020/12/14 18:50:32 by ztan          ########   odam.nl          #
+#    Updated: 2020/12/23 14:15:03 by zenotan       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,20 +18,20 @@ ENV		MYSQL_DATABASE=wordpress
 ENV		MYSQL_USER=admin
 ENV		MYSQL_PASSWORD=admin
 
-# Installing packages MariaDB
+# Install MariaDB
 RUN		apk add --no-cache mysql mysql-client
 RUN		addgroup mysql mysql
 
 # copy wordpress database
 RUN		mkdir -p /tmp
-COPY	srcs/wordpress.sql /tmp/wordpress.sql
+COPY	srcs/wordpress.sql /tmp/
 COPY	srcs/my.cnf /etc/mysql/my.cnf
-COPY	srcs/init_1.sh /tmp/init_1.sh
-COPY	srcs/init_2.sh /tmp/init_2.sh
-RUN		chmod +x /tmp/init_1.sh
-RUN		chmod +x /tmp/init_2.sh
+COPY	srcs/wordpress.sh /tmp/
+COPY	srcs/start.sh /tmp/
+RUN		chmod +x /tmp/wordpress.sh
+RUN		chmod +x /tmp/start.sh
 
 # default port for mysql
 EXPOSE	3306
 
-CMD		sh /tmp/init_1.sh
+CMD		sh /tmp/start.sh

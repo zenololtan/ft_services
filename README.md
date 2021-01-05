@@ -1,0 +1,1 @@
+YAML files - https://www.mirantis.com/blog/introduction-to-yaml-creating-a-kubernetes-deployment/
