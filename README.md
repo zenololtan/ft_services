@@ -56,7 +56,7 @@ $ ln -s ~/goinfre/docker ~/Library/Containers/com.docker.docker
 $ brew install minikube
 $ mkdir -p ~/goinfre/minikube
 $ chmod +x ~/goinfre/minikube
-$ export MINIKUBE_HOME=/Volumes/Storage/goinfre/rbakker/minikube/ (replace rbakker with your intra name)
+$ export MINIKUBE_HOME=/Volumes/Storage/goinfre/ztan/minikube/ (replace ztan with your intra name)
 ```
 
 > Install virtualbox
@@ -74,7 +74,7 @@ Install at https://dl1.cdn.filezilla-project.org/client/FileZilla_3.48.1_macosx-
 > Run the following commands in the terminal
 
 ```shell
-$ git clone https://github.com/rbakker96/ft_services.git ft_services
+$ git clone https://github.com/zenololtan/ft_services.git ft_services
 $ cd ft_services
 -> start docker desktop
 $ bash setup.sh
