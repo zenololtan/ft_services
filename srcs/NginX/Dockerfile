@@ -6,13 +6,13 @@
 #    By: zenotan <zenotan@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/12/01 15:31:31 by zenotan       #+#    #+#                  #
-#    Updated: 2021/01/15 14:32:25 by zenotan       ########   odam.nl          #
+#    Updated: 2021/01/15 17:45:04 by zenotan       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 #		src: https://wiki.alpinelinux.org/wiki/Nginx
 #		importing os && upgrading
-FROM	alpine:latest
+FROM	alpine:3.12
 
 #		install nginx
 RUN		apk update

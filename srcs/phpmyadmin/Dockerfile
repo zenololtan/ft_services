@@ -6,11 +6,11 @@
 #    By: zenotan <zenotan@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/12/24 16:47:51 by zenotan       #+#    #+#                  #
-#    Updated: 2020/12/24 16:53:01 by zenotan       ########   odam.nl          #
+#    Updated: 2021/01/15 17:46:09 by zenotan       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-FROM	alpine:latest
+FROM	alpine:3.12
 
 RUN		apk update \
 		&& apk add php7 php7-fpm php7-opcache php7-gd php7-mysqli php7-zlib php7-curl php7-mbstring php7-json php7-session php7-zip \

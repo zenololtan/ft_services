@@ -6,12 +6,12 @@
 #    By: ztan <ztan@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/12/14 13:47:26 by ztan          #+#    #+#                  #
-#    Updated: 2020/12/23 13:05:46 by zenotan       ########   odam.nl          #
+#    Updated: 2021/01/15 17:46:19 by zenotan       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 # https://wiki.alpinelinux.org/wiki/WordPress
-FROM	alpine:latest
+FROM	alpine:3.12
 
 RUN		apk update
 

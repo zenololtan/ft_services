@@ -58,5 +58,5 @@ kubectl apply -f srcs/yaml/telegraf.yaml
 docker build -t ft_influxdb ./srcs/influxdb/
 kubectl apply -f srcs/yaml/influxdb.yaml
 
-# ---------------------------MINIKUBE DASHBOARD---------------------
+# # ---------------------------MINIKUBE DASHBOARD---------------------
 minikube dashboard

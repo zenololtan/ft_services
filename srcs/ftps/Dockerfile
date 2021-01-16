@@ -6,11 +6,11 @@
 #    By: zenotan <zenotan@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/07 11:57:10 by zenotan       #+#    #+#                  #
-#    Updated: 2021/01/07 13:49:59 by zenotan       ########   odam.nl          #
+#    Updated: 2021/01/15 17:45:32 by zenotan       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-FROM alpine:latest
+FROM	alpine:3.12
 
 RUN apk upgrade && \
     apk --update --no-cache add \
