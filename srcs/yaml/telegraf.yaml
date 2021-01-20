@@ -8,19 +8,21 @@ metadata:
     app: telegraf
 spec:
   ports:
-    - port: 8125
+    - port: 4999
       protocol: UDP
+      targetPort: 4999
   selector:
     app: telegraf
-  # type: ClusterIP
-  type: LoadBalancer
+  type: ClusterIP
+status:
+  loadBalancer: {}
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: telegraf-config
   labels:
     app: telegraf
+  name: telegraf-config
 data:
   telegraf.conf: |+
     [[inputs.docker]]
@@ -42,6 +44,7 @@ data:
       database = "$INFLUXDB_DB"
       username = "$INFLUXDB_USER"
       password = "$INFLUXDB_USER_PASSWORD"
+
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -63,17 +66,23 @@ spec:
         - name: telegraf
           image: ft_telegraf
           imagePullPolicy: Never
+          volumeMounts:
+            - mountPath: /etc/telegraf/telegraf.conf
+              name: telegraf-config
+              subPath: telegraf.conf
+            - name: docker-socket
+              mountPath: /var/run/docker.sock
           envFrom:
             - secretRef:
                name: telegraf-secret
           volumeMounts:
-          - name: telegraf-config-volume
+          - name: telegraf-config
             mountPath: etc/telegraf/telegraf.conf
             subPath: telegraf.conf
           - name: docker-socket
             mountPath: /var/run/docker.sock
       volumes:
-      - name: telegraf-config-volume
+      - name: telegraf-config
         configMap:
           name: telegraf-config
       - name: docker-socket

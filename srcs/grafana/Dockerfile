@@ -1,41 +1,22 @@
 FROM	alpine:3.12
 
-# Update software packages
-RUN		apk add wget
-RUN     apk add libc6-compat
-RUN     apk add ca-certificates
-RUN     apk add su-exec
-RUN     apk add bash
+ENV		GRAFANA_VERSION=7.3.3
 
-# Install grafana
-RUN     wget -c https://dl.grafana.com/oss/release/grafana-7.3.7.linux-amd64.tar.gz
-RUN     tar -xzvf grafana-7.3.7.linux-amd64.tar.gz
-RUN     rm grafana-7.3.7.linux-amd64.tar.gz
-RUN     mv /grafana-7.3.7 /usr/share/
-RUN     mv /usr/share/grafana-7.3.7 /usr/share/grafana
+RUN		apk update && \
+		apk upgrade && \
+		apk add curl && \
+		apk add wget && \
+		apk add libc6-compat
 
-# # RUN apk update && \
-# #     apk add wget bash && \
-# #     apk add grafana --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/
+RUN		wget https://dl.grafana.com/oss/release/grafana-7.3.3.linux-amd64.tar.gz
+RUN 	tar -zxvf grafana-7.3.3.linux-amd64.tar.gz
+RUN		rm grafana-${GRAFANA_VERSION}.linux-amd64.tar.gz \
+		&& mv /grafana-${GRAFANA_VERSION} /usr/share/ \
+		&& mv /usr/share/grafana-${GRAFANA_VERSION} /usr/share/grafana
 
-# # COPY dashboards/*.json /usr/share/grafana/public/dashboards/
+COPY	srcs/*.json /usr/share/grafana/public/dashboards/
+WORKDIR	/usr/share/grafana/bin
 
-EXPOSE 3000
+EXPOSE	3000
 
-# WORKDIR /usr/share/grafana/bin
-CMD grafana-server
-
-# # CMD [ "grafana-server", "web" ]
-
-# FROM alpine
-
-# RUN apk update && \
-#     apk add wget bash && \
-#     apk add grafana --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/
-
-# COPY dashboards/*.json /usr/share/grafana/public/dashboards/
-
-# EXPOSE 3000
-
-# WORKDIR /usr/share/grafana/bin
-# CMD grafana-server
+CMD		./grafana-server

@@ -6,7 +6,7 @@ metadata:
   creationTimestamp: null
   labels:
     app: grafana
-  name: grafana-service
+  name: grafana
 spec:
   ports:
   - port: 3000
@@ -15,6 +15,8 @@ spec:
   selector:
     app: grafana
   type: LoadBalancer
+status:
+  loadBalancer: {}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -28,6 +30,7 @@ spec:
   selector:
     matchLabels:
       app: grafana
+  strategy: {}
   template:
     metadata:
       creationTimestamp: null
@@ -35,7 +38,7 @@ spec:
         app: grafana
     spec:
       containers:
-      - image: mygrafana
+      - image: ft_grafana
         name: grafana
         imagePullPolicy: Never
         ports:
@@ -51,10 +54,19 @@ spec:
             secretKeyRef:
               name: grafana-secret
               key: admin_pw
+        volumeMounts:
+        - name: provisioning
+          mountPath: /usr/share/grafana/conf/provisioning
       volumes:
-      - name: grafana-config-volume
+      - name: provisioning
         configMap:
           name: grafana-config
+          items:
+          - key: dashboards.yml
+            path: dashboards/dashboards.yml
+          - key: datasources.yml
+            path: datasources/datasources.yml
+status: {}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -67,11 +79,11 @@ data:
     - name: InfluxDB
       type: influxdb
       access: proxy
-      database: telegraf
+      database: telegrafDB
       isDefault: true
-      user: admin
-      password: kraken
-      url: http://influxdb-service:8086
+      user: root
+      password: root
+      url: http://influxdb:8086
   dashboards.yml: |
     apiVersion: 1
     providers:

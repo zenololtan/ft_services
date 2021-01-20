@@ -6,7 +6,7 @@
 #    By: zenotan <zenotan@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/01/07 11:57:10 by zenotan       #+#    #+#                  #
-#    Updated: 2021/01/15 17:45:32 by zenotan       ########   odam.nl          #
+#    Updated: 2021/01/19 17:13:57 by zenotan       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,6 @@ RUN apk upgrade && \
     vsftpd
 
 RUN openssl req -x509 -nodes -newkey rsa:4096 -days 365 -subj '/C=NL/ST=NH/L=Amsterdam/O=Codam/CN=vsftpd' -keyout /etc/ssl/private/vsftpd.key -out /etc/ssl/certs/vsftpd.crt
-
 
 RUN mkdir -p /var/ftps
 
