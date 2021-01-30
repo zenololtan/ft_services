@@ -43,8 +43,8 @@ spec:
         imagePullPolicy: Never
         ports:
         - containerPort: 80
-          name: http
+          name: http # shouldnt be secure
         - containerPort: 443
-          name: https
+          name: https # should be secure
         - containerPort: 22
-          name: ssh
+          name: ssh # ssh contact port

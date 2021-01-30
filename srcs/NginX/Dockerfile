@@ -6,7 +6,7 @@
 #    By: zenotan <zenotan@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/12/01 15:31:31 by zenotan       #+#    #+#                  #
-#    Updated: 2021/01/15 17:45:04 by zenotan       ########   odam.nl          #
+#    Updated: 2021/01/28 00:09:59 by zenotan       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,15 +37,20 @@ RUN		addgroup sshgroup \
 RUN		ssh-keygen -A
 
 #		https://stackoverflow.com/questions/44047315/generate-a-self-signed-certificate-in-docker
-RUN		openssl req -x509 -nodes -days 365 -newkey rsa:2048 -subj '/C=NL/ST=Noord-Holland/O=Codam/CN=services' -keyout /etc/ssl/services.key -out /etc/ssl/services.crt
+RUN openssl req -x509 \
+	-nodes -days 365 -newkey rsa:2048 \
+	-keyout /etc/ssl/private/localhost.key \
+	-out /etc/ssl/certs/localhost.crt \
+	-subj "/C=NL/ST=Noord Holland/L=Amsterdam\
+	/O=Codam/CN=services"
 
 COPY	srcs/nginx.conf /etc/nginx/
-COPY	srcs/sshd_config /etc/ssh/sshd_config
-COPY	setup.sh .
+COPY	srcs/sshd_config /etc/ssh/sshd_configB
+COPY	srcs/setup.sh .
 COPY	srcs/index.html /www
 COPY	srcs/style.css /www
 
-EXPOSE	80 443 22000
+EXPOSE	80 443 22
 
 RUN		chmod 777 setup.sh
 CMD		./setup.sh

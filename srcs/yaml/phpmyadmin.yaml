@@ -9,6 +9,7 @@ spec:
     app: phpmyadmin
   ports:
   - protocol: TCP
+    name: http
     port: 5000
     targetPort: 5000
   type: LoadBalancer

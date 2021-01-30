@@ -31,31 +31,31 @@ docker build -t ft_nginx ./srcs/nginx/
 kubectl apply -f srcs/yaml/nginx.yaml
 
 #mysql
-docker build -t ft_mysql ./srcs/mysql/
+docker build -qt ft_mysql ./srcs/mysql/
 kubectl apply -f srcs/yaml/mysql.yaml
 
 #wordpress
-docker build -t ft_wordpress ./srcs/wordpress/
+docker build -qt ft_wordpress ./srcs/wordpress/
 kubectl apply -f srcs/yaml/wordpress.yaml
 
 #phpmyadmin
-docker build -t ft_phpmyadmin ./srcs/phpmyadmin/
+docker build -qt ft_phpmyadmin ./srcs/phpmyadmin/
 kubectl apply -f srcs/yaml/phpmyadmin.yaml
 
 #ftps
-docker build -t ft_ftps ./srcs/ftps/
+docker build -qt ft_ftps ./srcs/ftps/
 kubectl apply -f srcs/yaml/ftps.yaml
 
 #influxDB
-docker build -t ft_influxdb ./srcs/influxdb/
+docker build -qt ft_influxdb ./srcs/influxdb/
 kubectl apply -f srcs/yaml/influxdb.yaml
 
 #telegraf
-docker build -t ft_telegraf ./srcs/telegraf/
+docker build -qt ft_telegraf ./srcs/telegraf/
 kubectl apply -f srcs/yaml/telegraf.yaml
 
 #grafana
-docker build -t ft_grafana ./srcs/grafana/
+docker build -qt ft_grafana ./srcs/grafana/
 kubectl apply -f srcs/yaml/grafana.yaml
 
 # # ---------------------------MINIKUBE DASHBOARD---------------------
