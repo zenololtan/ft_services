@@ -12,7 +12,10 @@ do
 done
 echo "Connection with Mysql established."
 
-su -c "/wpinstall.sh" - www
+php-fpm7
+
+su -c "/tmp/wpinstall.sh" - www
+
 nginx
 
 while true; do

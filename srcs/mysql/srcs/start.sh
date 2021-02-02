@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # launch script without being dependent to user
-nohup sh /tmp/wordpress.sh > /dev/null 2>&1 &
+nohup sh /tmp/start2.sh > /dev/null 2>&1 &
 # to listen external requests
 sed -i 's/skip-networking/#skip-networking/g' /etc/my.cnf.d/mariadb-server.cnf
 # define directory for db

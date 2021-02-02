@@ -1,30 +1,127 @@
+
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   annotations:
+#     metallb.universe.tf/allow-shared-ip: shared
+#   name: wordpress
+#   labels:
+#     app: wordpress
+# spec:
+#   ports:
+#     - port: 5050
+#       targetPort: 5050
+#       protocol: TCP
+#   selector:
+#     app: wordpress
+#   type: LoadBalancer
+# ---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   creationTimestamp: null
+#   labels:
+#     app: wordpress
+#   name: wordpress
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: wordpress
+#   strategy: {}
+#   template:
+#     metadata:
+#       creationTimestamp: null
+#       labels:
+#         app: wordpress
+#     spec:
+#       containers:
+#       - image: ft_wordpress
+#         name: wordpress
+#         imagePullPolicy: Never
+#         ports:
+#         - containerPort: 5050
+#           name: wordpress
+#         env:
+#         - name: WORDPRESS_DB_HOST
+#           value: mysql
+#         - name: WORDPRESS_DB_PASSWORD
+#           valueFrom:
+#             secretKeyRef:
+#               name: mysql-secret
+#               key: password
+#         - name: WORDPRESS_DB_USER
+#           valueFrom:
+#             secretKeyRef:
+#               name: mysql-secret
+#               key: dbuser
+#         - name: WORDPRESS_DB_NAME
+#           valueFrom:
+#             secretKeyRef:
+#               name: mysql-secret
+#               key: dbname
+#         volumeMounts:
+#         - name: wordpress-persistent
+#           mountPath: /var/www/html
+#       volumes:
+#       - name: wordpress-persistent
+#         persistentVolumeClaim:
+#           claimName: wordpress-pv-claim
+# status: {}
+# ---
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: wordpress-pv
+#   labels:
+#     type: local
+# spec:
+#   storageClassName: manual
+#   capacity:
+#     storage: 1Gi
+#   accessModes:
+#     - ReadWriteOnce
+#   hostPath:
+#     path: "/var/www/html"
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: wordpress-pv-claim
+# spec:
+#   storageClassName: manual
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 1Gi
+
 apiVersion: v1
 kind: Service
 metadata:
   annotations:
     metallb.universe.tf/allow-shared-ip: shared
+  creationTimestamp: null
   name: wordpress
   labels:
     app: wordpress
 spec:
+  ports:
+  - name: wordpress
+    port: 5050
+    targetPort: 5050
   selector:
     app: wordpress
     tier: frontend
-  ports:
-    - name: http
-      protocol: TCP
-      port: 5050
-      targetPort: 5050
   type: LoadBalancer
 ---
-apiVersion: apps/v1
+apiVersion: apps/v1 
 kind: Deployment
 metadata:
   name: wordpress
   labels:
     app: wordpress
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: wordpress
@@ -38,27 +135,12 @@ spec:
         tier: frontend
     spec:
       containers:
-      - name: wordpress
-        image: ft_wordpress
+      - image: ft_wordpress
+        name: wordpress
         imagePullPolicy: Never
         env:
         - name: WORDPRESS_DB_HOST
           value: mysql
-        - name: WORDPRESS_DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: password
-        - name: WORDPRESS_DB_USER
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: dbuser
-        - name: WORDPRESS_DB_NAME
-          valueFrom:
-            secretKeyRef:
-              name: mysql-secret
-              key: dbname
         ports:
         - containerPort: 5050
           name: wordpress

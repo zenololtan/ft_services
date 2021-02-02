@@ -27,7 +27,7 @@ kubectl apply -f srcs/secret.yml
 # ---------------------------DEPLOY SERVICES------------------------
 
 #nginx
-docker build -t ft_nginx ./srcs/nginx/
+docker build -qt ft_nginx ./srcs/nginx/
 kubectl apply -f srcs/yaml/nginx.yaml
 
 #mysql
