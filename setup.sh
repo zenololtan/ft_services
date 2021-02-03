@@ -39,7 +39,7 @@ docker build -qt ft_wordpress ./srcs/wordpress/
 kubectl apply -f srcs/yaml/wordpress.yaml
 
 #phpmyadmin
-docker build -qt ft_phpmyadmin ./srcs/phpmyadmin/
+docker build -t ft_phpmyadmin ./srcs/phpmyadmin/
 kubectl apply -f srcs/yaml/phpmyadmin.yaml
 
 #ftps

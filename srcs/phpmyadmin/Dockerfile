@@ -6,38 +6,43 @@
 #    By: zenotan <zenotan@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/12/24 16:47:51 by zenotan       #+#    #+#                  #
-#    Updated: 2021/01/28 00:50:33 by zenotan       ########   odam.nl          #
+#    Updated: 2021/02/03 19:00:24 by zenotan       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 FROM	alpine:3.12
 
-RUN apk update && \
-    apk add nginx && \
-    apk add php7 php7-fpm php7-opcache php7-gd php7-mysqli php7-zlib php7-curl php7-mbstring php7-json php7-session php7-zip && \
-    apk add wget
+# Update the packagelist and install the additional packages
+RUN apk update --no-cache && \
+    apk add php7 php7-fpm php7-opcache php7-gd php7-mysqli php7-zlib php7-curl php7-mbstring php7-json && \
+    apk add nginx php7-session php7-zip wget
 
-RUN mkdir www
-RUN mkdir -p /run/nginx
+# set up nginx for phpmyadmin
+RUN adduser -D -g 'www' www && \
+    mkdir /www && \
+    chown -R www:www /var/lib/nginx && \
+    chown -R www:www /www
+RUN mkdir -p /run/nginx 
 
-RUN wget https://files.phpmyadmin.net/phpMyAdmin/5.0.1/phpMyAdmin-5.0.1-english.tar.gz
-RUN tar -xzvf phpMyAdmin-5.0.1-english.tar.gz
-RUN rm -rf phpMyAdmin-5.0.1-english.tar.gz
-RUN mv phpMyAdmin-5.0.1-english/* /www
-RUN rm -rf phpMyAdmin-5.0.1-english
+# download sourcecode for phpmyadmin
+RUN wget http://files.directadmin.com/services/all/phpMyAdmin/phpMyAdmin-5.0.2-all-languages.tar.gz
+# Unpack the archive and remove the archive
+RUN tar -zxvf phpMyAdmin-5.0.2-all-languages.tar.gz
+RUN	mv -v phpMyAdmin-5.0.2-all-languages/* /www/
+RUN	rm -rf phpMyAdmin-5.0.2-all-languages.tar.gz
+RUN	rm -rf phpMyAdmin-5.0.2-all-languages
+# to correct this warning: The $cfg['TempDir'] (/www/tmp/) is not accessible.
 RUN mkdir -p /www/tmp
 RUN chmod 777 /www/tmp
 
-COPY	./srcs/config.inc.php /www
-COPY	./srcs/nginx.conf /etc/nginx
+# copy config for phpmyadmin and nginx
+COPY ./srcs/config.inc.php /www/
+COPY ./srcs/nginx.conf /etc/nginx/nginx.conf
 
-COPY	srcs/start.sh .
-RUN		chmod +x start.sh
+# expose port
+EXPOSE 5000
 
-RUN adduser -D -g 'www' www
-RUN chown -R www:www /var/lib/nginx
-RUN chown -R www:www /www
-
-EXPOSE	5000
-
-CMD		./start.sh
+# start
+COPY srcs/start.sh /www
+RUN chmod +x /www/start.sh
+CMD sh www/start.sh

@@ -1,5 +1,6 @@
+#! bin/bash
+
 php-fpm7
-php
 nginx
 
 while true; do
