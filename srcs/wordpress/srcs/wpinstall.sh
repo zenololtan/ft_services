@@ -10,3 +10,6 @@ wp user create a a@example.com --role=editor --user_pass=editor
 wp user create b b@example.com --role=author --user_pass=author
 wp user create c c@example.com --role=contributor --user_pass=contributor
 wp user create d d@example.com --role=subscriber --user_pass=subscriber
+
+wp theme install vilva
+wp theme activate vilva

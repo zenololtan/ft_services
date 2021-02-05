@@ -44,6 +44,17 @@ spec:
       - name: ftps
         image: ft_ftps
         imagePullPolicy: Never
+        env:
+        - name: USER
+          valueFrom:
+            secretKeyRef:
+              name: ftps-secret
+              key: user
+        - name: PASS
+          valueFrom:
+            secretKeyRef:
+              name: ftps-secret
+              key: password
         ports:
         - containerPort: 21
           protocol: TCP

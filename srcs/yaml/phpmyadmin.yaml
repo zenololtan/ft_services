@@ -35,13 +35,13 @@ spec:
           imagePullPolicy: Never
           ports:
             - containerPort: 5000
-          env:
-            - name: PMA_HOST
-              value: mysql
-            - name: PMA_PORT
-              value: "3306"
-            - name: MYSQL_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: php-secret
-                  key: password
+          # env:
+          #   - name: PMA_HOST
+          #     value: mysql
+          #   - name: PMA_PORT
+          #     value: "3306"
+          #   - name: MYSQL_ROOT_PASSWORD
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: php-secret
+          #         key: password

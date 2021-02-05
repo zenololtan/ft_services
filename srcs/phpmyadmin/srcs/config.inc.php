@@ -21,3 +21,4 @@ $cfg['Servers'][$i]['compress'] = false;
 $cfg['Servers'][$i]['AllowNoPassword'] = true;
 /* Absolute URL necessary for redirect */
 $cfg['PmaAbsoluteUri'] = '/phpmyadmin';
+$cfg['MemoryLimit'] = '128M';
